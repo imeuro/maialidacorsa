@@ -1,53 +1,81 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying Archive pages.
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package mdc2019
+ * @package GeneratePress
  */
 
-get_header();
-?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+get_header(); ?>
 
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<?php
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</header><!-- .page-header -->
-
+	<div id="primary" <?php generate_do_element_classes( 'content' ); ?>>
+		<main id="main" <?php generate_do_element_classes( 'main' ); ?>>
 			<?php
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+			/**
+			 * generate_before_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_before_main_content' );
 
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
+			if ( have_posts() ) :
+
+				/**
+				 * generate_archive_title hook.
+				 *
+				 * @since 0.1
+				 *
+				 * @hooked generate_archive_title - 10
 				 */
-				get_template_part( 'template-parts/content', get_post_type() );
+				do_action( 'generate_archive_title' );
 
-			endwhile;
+				while ( have_posts() ) : the_post();
 
-			the_posts_navigation();
+					/*
+					 * Include the Post-Format-specific template for the content.
+					 * If you want to override this in a child theme, then include a file
+					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+					 */
+					get_template_part( 'content', get_post_format() );
 
-		else :
+				endwhile;
 
-			get_template_part( 'template-parts/content', 'none' );
+				/**
+				 * generate_after_loop hook.
+				 *
+				 * @since 2.3
+				 */
+				do_action( 'generate_after_loop' );
 
-		endif;
-		?>
+				generate_content_nav( 'nav-below' );
 
+			else :
+
+				get_template_part( 'no-results', 'archive' );
+
+			endif;
+
+			/**
+			 * generate_after_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_after_main_content' );
+			?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php
-get_sidebar();
+	<?php
+	/**
+	 * generate_after_primary_content_area hook.
+	 *
+	 * @since 2.0
+	 */
+	do_action( 'generate_after_primary_content_area' );
+
+	generate_construct_sidebars();
+
 get_footer();

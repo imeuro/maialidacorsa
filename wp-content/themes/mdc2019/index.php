@@ -1,59 +1,77 @@
 <?php
 /**
- * The main template file
+ * The main template file.
  *
  * This is the most generic template file in a WordPress theme
  * and one of the two required files for a theme (the other being style.css).
  * It is used to display a page when nothing more specific matches a query.
  * E.g., it puts together the home page when no home.php file exists.
+ * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package mdc2019
+ * @package GeneratePress
  */
 
-get_header();
-?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+get_header(); ?>
 
-		<?php
-		if ( have_posts() ) :
+	<div id="primary" <?php generate_do_element_classes( 'content' ); ?>>
+		<main id="main" <?php generate_do_element_classes( 'main' ); ?>>
+			<?php
+			/**
+			 * generate_before_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_before_main_content' );
 
-			if ( is_home() && ! is_front_page() ) :
-				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-				<?php
+			if ( have_posts() ) :
+
+				while ( have_posts() ) : the_post();
+
+					/* Include the Post-Format-specific template for the content.
+					 * If you want to override this in a child theme, then include a file
+					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+					 */
+					get_template_part( 'content', get_post_format() );
+
+				endwhile;
+
+				/**
+				 * generate_after_loop hook.
+				 *
+				 * @since 2.3
+				 */
+				do_action( 'generate_after_loop' );
+
+				generate_content_nav( 'nav-below' );
+
+			else :
+
+				get_template_part( 'no-results', 'index' );
+
 			endif;
 
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
-
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
-
-			endwhile;
-
-			the_posts_navigation();
-
-		else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
+			/**
+			 * generate_after_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_after_main_content' );
+			?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php
-get_sidebar();
+	<?php
+	/**
+	 * generate_after_primary_content_area hook.
+	 *
+	 * @since 2.0
+	 */
+	do_action( 'generate_after_primary_content_area' );
+
+	generate_construct_sidebars();
+
 get_footer();

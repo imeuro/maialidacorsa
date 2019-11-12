@@ -1,58 +1,67 @@
 <?php
 /**
- * The header for our theme
+ * The template for displaying the header.
  *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
- *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package mdc2019
+ * @package GeneratePress
  */
 
-?>
-<!doctype html>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'mdc2019' ); ?></a>
+<body <?php body_class(); ?> <?php generate_do_microdata( 'body' ); ?>>
+	<?php
+	/**
+	 * wp_body_open hook.
+	 *
+	 * @since 2.3
+	 */
+	do_action( 'wp_body_open' );
 
-	<header id="masthead" class="site-header">
-		<div class="site-branding">
+	/**
+	 * generate_before_header hook.
+	 *
+	 * @since 0.1
+	 *
+	 * @hooked generate_do_skip_to_content_link - 2
+	 * @hooked generate_top_bar - 5
+	 * @hooked generate_add_navigation_before_header - 5
+	 */
+	do_action( 'generate_before_header' );
+
+	/**
+	 * generate_header hook.
+	 *
+	 * @since 1.3.42
+	 *
+	 * @hooked generate_construct_header - 10
+	 */
+	do_action( 'generate_header' );
+
+	/**
+	 * generate_after_header hook.
+	 *
+	 * @since 0.1
+	 *
+	 * @hooked generate_featured_page_header - 10
+	 */
+	do_action( 'generate_after_header' );
+	?>
+
+	<div id="page" class="hfeed site grid-container container grid-parent">
+		<div id="content" class="site-content">
 			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
-				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$mdc2019_description = get_bloginfo( 'description', 'display' );
-			if ( $mdc2019_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $mdc2019_description; /* WPCS: xss ok. */ ?></p>
-			<?php endif; ?>
-		</div><!-- .site-branding -->
-
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'mdc2019' ); ?></button>
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
-			) );
-			?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
+			/**
+			 * generate_inside_container hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_inside_container' );

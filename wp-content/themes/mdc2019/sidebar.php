@@ -1,17 +1,34 @@
 <?php
 /**
- * The sidebar containing the main widget area
+ * The Sidebar containing the main widget areas.
  *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package mdc2019
+ * @package GeneratePress
  */
 
-if ( ! is_active_sidebar( 'sidebar-1' ) ) {
-	return;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 ?>
+<div id="right-sidebar" <?php generate_do_element_classes( 'right_sidebar' ); ?> <?php generate_do_microdata( 'sidebar' ); ?>>
+	<div class="inside-right-sidebar">
+		<?php
+		/**
+		 * generate_before_right_sidebar_content hook.
+		 *
+		 * @since 0.1
+		 */
+		do_action( 'generate_before_right_sidebar_content' );
 
-<aside id="secondary" class="widget-area">
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
-</aside><!-- #secondary -->
+		if ( ! dynamic_sidebar( 'sidebar-1' ) ) {
+			generate_do_default_sidebar_widgets( 'right-sidebar' );
+		}
+
+		/**
+		 * generate_after_right_sidebar_content hook.
+		 *
+		 * @since 0.1
+		 */
+		do_action( 'generate_after_right_sidebar_content' );
+		?>
+	</div><!-- .inside-right-sidebar -->
+</div><!-- #secondary -->

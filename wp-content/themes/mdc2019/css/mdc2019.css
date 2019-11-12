@@ -1,0 +1,16 @@
+/* the real stuff */
+@media all and (max-width: 768px) {
+	.inside-header {padding: 20px 0;}
+	.site-branding-container {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+	    text-align: left;
+	}
+	.site-header .header-image {
+		min-width: 320px;
+    	width: 100%;
+	}
+	.site-branding { display: none; }
+
+}

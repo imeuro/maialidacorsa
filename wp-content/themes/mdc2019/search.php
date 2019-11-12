@@ -1,55 +1,79 @@
 <?php
 /**
- * The template for displaying search results pages
+ * The template for displaying Search Results pages.
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
- *
- * @package mdc2019
+ * @package GeneratePress
  */
 
-get_header();
-?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-	<section id="primary" class="content-area">
-		<main id="main" class="site-main">
+get_header(); ?>
 
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<h1 class="page-title">
-					<?php
-					/* translators: %s: search query. */
-					printf( esc_html__( 'Search Results for: %s', 'mdc2019' ), '<span>' . get_search_query() . '</span>' );
-					?>
-				</h1>
-			</header><!-- .page-header -->
-
+	<div id="primary" <?php generate_do_element_classes( 'content' ); ?>>
+		<main id="main" <?php generate_do_element_classes( 'main' ); ?>>
 			<?php
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+			/**
+			 * generate_before_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_before_main_content' );
+
+			if ( have_posts() ) : ?>
+
+				<header class="page-header">
+					<h1 class="page-title">
+						<?php
+						printf( // WPCS: XSS ok.
+							/* translators: 1: Search query name */
+							__( 'Search Results for: %s', 'generatepress' ),
+							'<span>' . get_search_query() . '</span>'
+						);
+						?>
+					</h1>
+				</header><!-- .page-header -->
+
+				<?php while ( have_posts() ) : the_post();
+
+					get_template_part( 'content', 'search' );
+
+				endwhile;
 
 				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
+				 * generate_after_loop hook.
+				 *
+				 * @since 2.3
 				 */
-				get_template_part( 'template-parts/content', 'search' );
+				do_action( 'generate_after_loop' );
 
-			endwhile;
+				generate_content_nav( 'nav-below' );
 
-			the_posts_navigation();
+			else :
 
-		else :
+				get_template_part( 'no-results', 'search' );
 
-			get_template_part( 'template-parts/content', 'none' );
+			endif;
 
-		endif;
-		?>
-
+			/**
+			 * generate_after_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_after_main_content' );
+			?>
 		</main><!-- #main -->
-	</section><!-- #primary -->
+	</div><!-- #primary -->
 
-<?php
-get_sidebar();
+	<?php
+	/**
+	 * generate_after_primary_content_area hook.
+	 *
+	 * @since 2.0
+	 */
+	do_action( 'generate_after_primary_content_area' );
+
+	generate_construct_sidebars();
+
 get_footer();

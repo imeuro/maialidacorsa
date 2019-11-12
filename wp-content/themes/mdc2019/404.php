@@ -1,60 +1,93 @@
 <?php
 /**
- * The template for displaying 404 pages (not found)
+ * The template for displaying 404 pages (Not Found).
  *
- * @link https://codex.wordpress.org/Creating_an_Error_404_Page
- *
- * @package mdc2019
+ * @package GeneratePress
  */
 
-get_header();
-?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+get_header(); ?>
 
-			<section class="error-404 not-found">
-				<header class="page-header">
-					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'mdc2019' ); ?></h1>
-				</header><!-- .page-header -->
+	<div id="primary" <?php generate_do_element_classes( 'content' ); ?>>
+		<main id="main" <?php generate_do_element_classes( 'main' ); ?>>
+			<?php
+			/**
+			 * generate_before_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_before_main_content' );
+			?>
 
-				<div class="page-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'mdc2019' ); ?></p>
+			<div class="inside-article">
 
+				<?php
+				/**
+				 * generate_before_content hook.
+				 *
+				 * @since 0.1
+				 *
+				 * @hooked generate_featured_page_header_inside_single - 10
+				 */
+				do_action( 'generate_before_content' );
+				?>
+
+				<header class="entry-header">
+					<h1 class="entry-title" itemprop="headline"><?php echo apply_filters( 'generate_404_title', __( 'Oops! That page can&rsquo;t be found.', 'generatepress' ) ); // WPCS: XSS OK. ?></h1>
+				</header><!-- .entry-header -->
+
+				<?php
+				/**
+				 * generate_after_entry_header hook.
+				 *
+				 * @since 0.1
+				 *
+				 * @hooked generate_post_image - 10
+				 */
+				do_action( 'generate_after_entry_header' );
+				?>
+
+				<div class="entry-content" itemprop="text">
 					<?php
+					echo '<p>' . apply_filters( 'generate_404_text', __( 'It looks like nothing was found at this location. Maybe try searching?', 'generatepress' ) ) . '</p>'; // WPCS: XSS OK.
+
 					get_search_form();
-
-					the_widget( 'WP_Widget_Recent_Posts' );
 					?>
+				</div><!-- .entry-content -->
 
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'mdc2019' ); ?></h2>
-						<ul>
-							<?php
-							wp_list_categories( array(
-								'orderby'    => 'count',
-								'order'      => 'DESC',
-								'show_count' => 1,
-								'title_li'   => '',
-								'number'     => 10,
-							) );
-							?>
-						</ul>
-					</div><!-- .widget -->
+				<?php
+				/**
+				 * generate_after_content hook.
+				 *
+				 * @since 0.1
+				 */
+				do_action( 'generate_after_content' );
+				?>
 
-					<?php
-					/* translators: %1$s: smiley */
-					$mdc2019_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'mdc2019' ), convert_smilies( ':)' ) ) . '</p>';
-					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$mdc2019_archive_content" );
+			</div><!-- .inside-article -->
 
-					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
-
-				</div><!-- .page-content -->
-			</section><!-- .error-404 -->
-
+			<?php
+			/**
+			 * generate_after_main_content hook.
+			 *
+			 * @since 0.1
+			 */
+			do_action( 'generate_after_main_content' );
+			?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php
+	<?php
+	/**
+	 * generate_after_primary_content_area hook.
+	 *
+	 * @since 2.0
+	 */
+	do_action( 'generate_after_primary_content_area' );
+
+	generate_construct_sidebars();
+
 get_footer();
