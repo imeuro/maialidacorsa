@@ -56,6 +56,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 	do_action( 'generate_after_header' );
 	?>
 
+	<?php 
+	//** get the carousel for the homepage **//
+	if (is_home() || is_front_page()) {
+
+		$HomeCarousel = get_post(4638);
+		$Carouselcontent = $HomeCarousel->post_content;
+		$Carouselcontent = apply_filters('the_content', $Carouselcontent);
+		$Carouselcontent = str_replace(']]>', ']]>', $Carouselcontent);
+		?>
+		<script>
+		let Checkran_autoH;
+		let Set_autoH = function() {
+			if (typeof Swiper === "function") {
+				Swiper.autoHeight = true;
+				Checkran_autoH = 'ok';
+				clearInterval(run_autoH);
+			}
+			console.log('Set_autoH: '+Checkran_autoH);
+		}
+		let run_autoH = setInterval(Set_autoH, 500);
+		let Check_autoH = function() {
+			if( Checkran_autoH == 'ok') {
+				clearInterval(run_autoH);
+			}
+			console.log('Check_autoH: '+Checkran_autoH);
+		}
+		
+		</script>
+		<section id="cover" class="section section-home section-home-cover">
+			<?php echo $Carouselcontent; ?>
+		</section>
+		<?php
+	}
+	?>
+
 	<div id="page" class="hfeed site grid-container container grid-parent">
 		<div id="content" class="site-content">
 			<?php

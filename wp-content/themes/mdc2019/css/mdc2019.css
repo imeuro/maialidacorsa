@@ -1,4 +1,10 @@
 /* the real stuff */
+
+.separate-containers .inside-article {
+    border-radius: 7px;
+}
+
+
 @media all and (max-width: 768px) {
 	.inside-header {padding: 20px 0;}
 	.site-branding-container {
@@ -12,4 +18,8 @@
     	width: 100%;
 	}
 	.site-branding { display: none; }
+
+}
+
+@media all and (max-width: 1280px) {
 }
