@@ -1,7 +1,10 @@
 window.addEventListener('load', function() {
 
+
+// INIT CAROUSELS in homepage
 	let sw = window.innerWidth;
 
+if (document.querySelectorAll('.swiper-container').length !== 0) {
 	let BHArgs = {
 		direction: 'horizontal',
 		autoplay: {
@@ -54,5 +57,18 @@ window.addEventListener('load', function() {
 
 	let BHSwiper = new Swiper ('.swiper-container.swiper-big-home', BHArgs);
 	let GHswiper = new Swiper('.swiper-container.swiper-gallery-home', GHArgs);
+}
+
+
+// INIT LIGHTBOX in albums
+let linkTags = document.querySelectorAll("figure.gallery-item a, .blocks-gallery-item figure a");
+Array.from(linkTags).forEach(function(el,item,array){
+	el.setAttribute('data-fslightbox','');
+	if (item == array.length - 1) {
+		refreshFsLightbox();
+		// console.log('refreshatoh!');
+	}
+});
+
 
 });
