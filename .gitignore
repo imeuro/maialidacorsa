@@ -14,7 +14,7 @@ wp-content/uploads/
 wp-content/mu-plugins/
 wp-content/wp-cache-config.php
 wp-content/plugins/*
-# !wp-content/plugins/catalogo-ragionato/
+!wp-content/plugins/mdc2019.php
 wp-admin/
 wp-includes/
 
