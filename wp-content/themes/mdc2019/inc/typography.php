@@ -113,7 +113,7 @@ if ( ! function_exists( 'generate_enqueue_google_fonts' ) ) {
 
 		// Enqueue our fonts
 		if ( $google_fonts ) {
-			wp_enqueue_style( 'generate-fonts', $fonts_url, array(), null, 'all' );
+			wp_enqueue_style( 'generate-fonts', $fonts_url.'&display=swap', array(), null, 'all' );
 		}
 	}
 }
