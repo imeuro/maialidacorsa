@@ -29,6 +29,24 @@ function mdc2019_files() {
 add_action('wp_print_styles', 'mdc2019_files'); 
 
 
+// load ContactForm7 css&js conditionally
+// https://techjourney.net/load-contact-form-7-cf7-js-css-conditionally-only-on-selected-pages/
+// remove default:
+add_filter( 'wpcf7_load_js', '__return_false' );
+add_filter( 'wpcf7_load_css', '__return_false' );
+// load only in selected pages:
+add_action('wp_enqueue_scripts', 'load_wpcf7_scripts');
+function load_wpcf7_scripts() {
+    if ( is_page(array(4326,4330)) ) {
+        if ( function_exists( 'wpcf7_enqueue_scripts' ) ) {
+            wpcf7_enqueue_scripts();
+        } 
+        if ( function_exists( 'wpcf7_enqueue_styles' ) ) {
+            wpcf7_enqueue_styles();
+        }
+    }
+}
+
 /////////////////////////////////////////////////////////////
 
 
