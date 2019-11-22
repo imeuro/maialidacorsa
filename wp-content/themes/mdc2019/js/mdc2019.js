@@ -1,3 +1,18 @@
+window.addEventListener("DOMContentLoaded", function() {
+	// INIT LIGHTBOX in albums
+	let linkTags = document.querySelectorAll("figure.gallery-item a, .blocks-gallery-item figure a");
+	if (linkTags.length !== 0) {
+		Array.from(linkTags).forEach(function(el,item,array){
+			el.setAttribute('data-fslightbox','');
+			if (item == array.length - 1) {
+				refreshFsLightbox();
+				// console.log('refreshatoh!');
+			}
+		});
+	}
+
+});
+
 window.addEventListener('load', function() {
 
 
@@ -58,17 +73,6 @@ window.addEventListener('load', function() {
 		let BHSwiper = new Swiper ('.swiper-container.swiper-big-home', BHArgs);
 		let GHswiper = new Swiper('.swiper-container.swiper-gallery-home', GHArgs);
 	}
-
-
-	// INIT LIGHTBOX in albums
-	var linkTags = document.querySelectorAll("figure.gallery-item a, .blocks-gallery-item figure a");
-	Array.from(linkTags).forEach(function(el,item,array){
-		el.setAttribute('data-fslightbox','');
-		if (item == array.length - 1) {
-			refreshFsLightbox();
-			// console.log('refreshatoh!');
-		}
-	});
 
 
 });
