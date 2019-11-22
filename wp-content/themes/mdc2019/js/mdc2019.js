@@ -1,74 +1,74 @@
 window.addEventListener('load', function() {
 
 
-// INIT CAROUSELS in homepage
+	// INIT CAROUSELS in homepage
 	let sw = window.innerWidth;
 
-if (document.querySelectorAll('.swiper-container').length !== 0) {
-	let BHArgs = {
-		direction: 'horizontal',
-		autoplay: {
-			delay: 5000,
-		},
-		loop: true,
-		fadeEffect: {
-			crossFade: true
-		},
-		keyboard: {
-			enabled: true,
-			onlyInViewport: true,
-		},
-		preloadImages: false,
-		lazy: true
-	};
-
-	let GHArgs = {};
-	if (sw > 640) {
-		GHArgs = {
-			slidesPerView: '3',
-			autoHeight: true,
-			centeredSlides: false,
-			spaceBetween: 30,
+	if (document.querySelectorAll('.swiper-container').length !== 0) {
+		let BHArgs = {
+			direction: 'horizontal',
 			autoplay: {
-				delay: 3000,
+				delay: 5000,
 			},
 			loop: true,
-			pagination: {
-				el: '.swiper-pagination',
-				clickable: true,
+			fadeEffect: {
+				crossFade: true
 			},
+			keyboard: {
+				enabled: true,
+				onlyInViewport: true,
+			},
+			preloadImages: false,
+			lazy: true
 		};
-	} else {
-		GHArgs = {
-			slidesPerView: '1',
-			autoHeight: true,
-			centeredSlides: true,
-			spaceBetween: 30,
-			autoplay: {
-				delay: 3000,
-			},
-			loop: true,
-			pagination: {
-				el: '.swiper-pagination',
-				clickable: true,
-			},
-		};
-    }
 
-	let BHSwiper = new Swiper ('.swiper-container.swiper-big-home', BHArgs);
-	let GHswiper = new Swiper('.swiper-container.swiper-gallery-home', GHArgs);
-}
+		let GHArgs = {};
+		if (sw > 640) {
+			GHArgs = {
+				slidesPerView: '3',
+				autoHeight: true,
+				centeredSlides: false,
+				spaceBetween: 30,
+				autoplay: {
+					delay: 3000,
+				},
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+			};
+		} else {
+			GHArgs = {
+				slidesPerView: '1',
+				autoHeight: true,
+				centeredSlides: true,
+				spaceBetween: 30,
+				autoplay: {
+					delay: 3000,
+				},
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+			};
+	    }
 
-
-// INIT LIGHTBOX in albums
-let linkTags = document.querySelectorAll("figure.gallery-item a, .blocks-gallery-item figure a");
-Array.from(linkTags).forEach(function(el,item,array){
-	el.setAttribute('data-fslightbox','');
-	if (item == array.length - 1) {
-		refreshFsLightbox();
-		// console.log('refreshatoh!');
+		let BHSwiper = new Swiper ('.swiper-container.swiper-big-home', BHArgs);
+		let GHswiper = new Swiper('.swiper-container.swiper-gallery-home', GHArgs);
 	}
-});
+
+
+	// INIT LIGHTBOX in albums
+	var linkTags = document.querySelectorAll("figure.gallery-item a, .blocks-gallery-item figure a");
+	Array.from(linkTags).forEach(function(el,item,array){
+		el.setAttribute('data-fslightbox','');
+		if (item == array.length - 1) {
+			refreshFsLightbox();
+			// console.log('refreshatoh!');
+		}
+	});
 
 
 });
