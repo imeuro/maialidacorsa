@@ -1,5 +1,9 @@
 /* the real stuff */
-
+.main-navigation,
+.main-navigation ul ul,
+.site-info {
+	background-color: #ff3366;
+}
 .separate-containers .inside-article {
     border-radius: 7px;
 }
