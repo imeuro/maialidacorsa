@@ -323,7 +323,7 @@ if ( ! function_exists( 'generate_content_more' ) ) {
 }
 
 if ( ! function_exists( 'generate_post_meta' ) ) {
-	add_action( 'generate_after_entry_title', 'generate_post_meta' );
+	// add_action( 'generate_after_entry_title', 'generate_post_meta' );
 	/**
 	 * Build the post meta.
 	 *
@@ -343,7 +343,7 @@ if ( ! function_exists( 'generate_post_meta' ) ) {
 }
 
 if ( ! function_exists( 'generate_footer_meta' ) ) {
-	add_action( 'generate_after_entry_content', 'generate_footer_meta' );
+	// add_action( 'generate_after_entry_content', 'generate_footer_meta' );
 	/**
 	 * Build the footer post meta.
 	 *

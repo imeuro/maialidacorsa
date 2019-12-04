@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 	<div id="primary" <?php generate_do_element_classes( 'content' ); ?>>
-		<main id="main" <?php generate_do_element_classes( 'main' ); ?>>
+		<main id="main" <?php generate_do_element_classes( 'main', 'tpl-archive tpl-archive-albums' ); ?>>
 			<?php
 			do_action( 'generate_before_main_content' );
 

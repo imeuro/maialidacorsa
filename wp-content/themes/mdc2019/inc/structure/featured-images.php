@@ -31,7 +31,7 @@ if ( ! function_exists( 'generate_post_image' ) ) {
 				esc_url( get_permalink() ),
 				get_the_post_thumbnail(
 					get_the_ID(),
-					apply_filters( 'generate_page_header_default_size', 'full' ),
+					apply_filters( 'generate_page_header_default_size', 'medium' ),
 					array(
 						'itemprop' => 'image',
 					)
@@ -62,7 +62,7 @@ if ( ! function_exists( 'generate_featured_page_header_area' ) ) {
 		?>
 		<div class="<?php echo esc_attr( $class ); ?> grid-container grid-parent">
 			<?php the_post_thumbnail(
-				apply_filters( 'generate_page_header_default_size', 'full' ),
+				apply_filters( 'generate_page_header_default_size', 'medium_large' ),
 				array(
 					'itemprop' => 'image',
 					'alt' => the_title_attribute( 'echo=0' ),

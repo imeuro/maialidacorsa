@@ -87,6 +87,12 @@ li.mdc-fotolist-item span {
     color: #f8f8f8;
 }
 
+.tpl-index .post { display: flex; }
+.tpl-index .post-image {
+    float: left;
+    margin: 10px 25px 0 0;
+}
+
 @media all and (max-width: 1280px) {
 }
 
@@ -124,5 +130,10 @@ li.mdc-fotolist-item span {
 
 @media all and (max-width: 480px) {
 	.mdc-fotolist ul li { flex: 0 0 100%; }
+	.tpl-index .post-image {
+		float: none;
+    	margin: 25px auto 0 auto;
+    	text-align: center;
+	}
 }
 
