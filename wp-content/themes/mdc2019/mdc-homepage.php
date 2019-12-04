@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 	<div id="primary" <?php generate_do_element_classes( 'content' ); ?>>
-		<main id="main" <?php generate_do_element_classes( 'main' ); ?>>
+		<main id="main" <?php generate_do_element_classes( 'main', 'tpl-mdc-homepage' ); ?>>
 			<?php
 			/**
 			 * generate_before_main_content hook.
