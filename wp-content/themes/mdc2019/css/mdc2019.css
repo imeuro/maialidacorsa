@@ -1,10 +1,15 @@
 /* the real stuff */
+body{
+	background: url(../bg-mdc2019.svg) no-repeat left bottom;
+	background-size: cover;
+	background-attachment: fixed;
+}
 .main-navigation,
 .main-navigation ul ul,
 .site-info,
-.section-home-infoutili .inside-article,
+.separate-containers .section-home-infoutili .inside-article,
 .swiper-pagination-bullet-active {
-	background-color: #ff3366;
+	background-color: #e5007d;
 }
 .main-navigation .main-nav ul li:hover > a,
 .main-navigation .main-nav ul li:focus > a,
@@ -16,6 +21,7 @@
 }
 .separate-containers .inside-article {
     border-radius: 7px;
+    background: transparent;
 }
 #cover .swiper-slide {
 	height: 600px;
@@ -29,9 +35,14 @@
     flex-flow: row nowrap;
     align-items: center;
     margin-bottom: 20px;
+    background: rgba(255,255,255,.85);
+    border-radius: 5px;
 }
 .item-latest-news figure {
     flex: 0 0 175px;
+}
+.item-latest-news figure a {
+	display: flex;
 }
 .item-latest-news figure img {
     border-radius: 5px;
@@ -49,6 +60,11 @@
 }
 .swiper-gallery-home .swiper-pagination { bottom: 0; }
 
+
+section#latestPhotos {
+    border-radius: 7px;
+    background: rgba(255,255,255,.85);
+}
 .mdc-fotolist, .mdc-fotolist ul {
 	list-style-type: none;
 	margin: 0;
@@ -92,8 +108,18 @@ li.mdc-fotolist-item span {
     float: left;
     margin: 10px 25px 0 0;
 }
+.tpl-single,
+.tpl-page {
+    background: #fff;
+    border-radius: 7px;
+}
+
+.footer-widgets {
+    background-color: rgba(255,255,255,.85);
+}
 
 @media all and (max-width: 1280px) {
+	body{ background-size: contain; }
 }
 
 @media all and (max-width: 768px) {
