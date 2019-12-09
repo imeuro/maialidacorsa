@@ -21,7 +21,10 @@ body{
 }
 .separate-containers .inside-article {
     border-radius: 7px;
-    background: transparent;
+    background: rgba(255,255,255,.95);
+}
+#cover .swiper-big-home {
+    background-color: #fff;
 }
 #cover .swiper-slide {
 	height: 600px;
@@ -35,7 +38,6 @@ body{
     flex-flow: row nowrap;
     align-items: center;
     margin-bottom: 20px;
-    background: rgba(255,255,255,.85);
     border-radius: 5px;
 }
 .item-latest-news figure {
@@ -55,7 +57,7 @@ body{
     position: absolute;
     bottom: 10px;
     left: 0px;
-    background: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.95);
     padding: 2px 10px;
 }
 .swiper-gallery-home .swiper-pagination { bottom: 0; }
@@ -63,7 +65,6 @@ body{
 
 section#latestPhotos {
     border-radius: 7px;
-    background: rgba(255,255,255,.85);
 }
 .mdc-fotolist, .mdc-fotolist ul {
 	list-style-type: none;
@@ -89,11 +90,10 @@ li.mdc-fotolist-item img {
     position: relative;
 }
 li.mdc-fotolist-item span {
-    background-color: rgba(255,255,255,.75);
+    background-color: rgba(255,255,255,.95);
     position: absolute;
     bottom: 10px;
     left: 0px;
-    background: rgba(255,255,255,.7);
     padding: 2px 10px;
     color: #222;
 }
@@ -115,7 +115,7 @@ li.mdc-fotolist-item span {
 }
 
 .footer-widgets {
-    background-color: rgba(255,255,255,.85);
+    background-color: rgba(255,255,255,.95);
 }
 
 @media all and (max-width: 1280px) {
