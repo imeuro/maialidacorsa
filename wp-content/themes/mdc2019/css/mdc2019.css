@@ -4,6 +4,9 @@ body{
 	background-size: cover;
 	background-attachment: fixed;
 }
+.inside-header {
+	padding: 0 40px;
+}
 .main-navigation,
 .main-navigation ul ul,
 .site-info,
@@ -76,9 +79,23 @@ section#latestPhotos {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
-.mdc-fotolist ul li { flex: 0 0 33%; }
+.mdc-fotolist ul li { 
+	flex: 0 0 calc(33% - 20px);
+	height: 225px;
+	margin: 10px
+}
+.mdc-fotolist ul li.mdc-fotolist-title-year {
+	height: auto;
+}
+.mdc-fotolist ul li a { 
+    height: 225px;
+    width: 100%;
+    background: no-repeat center center;
+    background-size: cover;
+    display: inline-block;
+}
 .mdc-fotolist .mdc-fotolist-year {
 	margin: 20px 0 0 0;
 }

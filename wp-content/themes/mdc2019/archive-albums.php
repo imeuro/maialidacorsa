@@ -49,11 +49,13 @@ get_header(); ?>
 						$raduniufficiali = get_pages($args_raduniufficiali);
 						if (!empty($raduniufficiali)) {
 							foreach ($raduniufficiali as $r) { 
+
 								if($r->post_content && $r->post_content == '[gallery]') {
-									echo '</ul><ul class="mdc-fotolist"><li class="mdc-fotolist-title"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3></li><ul>';
+									print_r($r);
+									echo '</ul><ul class="mdc-fotolist"><li class="mdc-fotolist-title-year"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3></li><ul>';
 								} else {
-									$fotolist_thumb = get_the_post_thumbnail($r->ID,'medium');
-									echo '<li class="mdc-fotolist-item"><a href="'. get_permalink($r->ID).'">'.$fotolist_thumb.'<span>'.$r->post_title.'</span></a></li>';
+									$fotolist_thumb_url = get_the_post_thumbnail_url($r->ID,'medium_large');
+									echo '<li class="mdc-fotolist-item"><a style="background-image:url('.$fotolist_thumb_url.');" href="'. get_permalink($r->ID).'"><span>'.$r->post_title.'</span></a></li>';
 								}
 
 							 }
@@ -76,8 +78,8 @@ get_header(); ?>
 								if($r->post_content && $r->post_content == '[gallery]') {
 									echo '</ul><ul class="mdc-fotolist"><li class="mdc-fotolist-title"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3></li><ul>';
 								} else {
-									$fotolist_thumb = get_the_post_thumbnail($r->ID,'medium');
-									echo '<li class="mdc-fotolist-item"><a href="'. get_permalink($r->ID).'">'.$fotolist_thumb.'<span>'.$r->post_title.'</span></a></li>';
+									$fotolist_thumb_url = get_the_post_thumbnail_url($r->ID,'medium_large');
+									echo '<li class="mdc-fotolist-item"><a style="background-image:url('.$fotolist_thumb_url.');" href="'. get_permalink($r->ID).'"><span>'.$r->post_title.'</span></a></li>';
 								}
 
 							 }
