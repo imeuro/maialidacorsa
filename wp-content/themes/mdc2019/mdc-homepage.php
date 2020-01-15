@@ -32,7 +32,7 @@ get_header(); ?>
 				<?php include("inc/latestphotos-home.php"); ?>
 			</section>
 
-
+			<?php /*
 			<section id="infoUtili" class="section section-home section-home-infoutili">
 				<div class="inside-article">
 		
@@ -48,6 +48,7 @@ get_header(); ?>
 					<footer class="section-meta"></footer><!-- .section-meta -->
 				</div><!-- .inside-article -->
 			</section>
+			*/ ?>
 
 
 
