@@ -47,6 +47,15 @@ function load_wpcf7_scripts() {
     }
 }
 
+
+// https://wpmayor.com/check-if-a-page-has-any-children-or-subpages/
+function has_children($post_type="post",$post_id) {
+    $children = get_pages("child_of=$post_id,post_type=$post_type");
+    if( count( $children ) != 0 ) { echo 'si'; return true; } // Has Children
+    else {  echo 'no'; return false; } // No children
+}
+
+
 /////////////////////////////////////////////////////////////
 
 

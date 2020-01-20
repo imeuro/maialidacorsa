@@ -74,14 +74,14 @@ section#latestPhotos {
 	margin: 0;
 	padding: 0;
 }
-.mdc-fotolist ul {
+.mdc-fotolist ul li ul {
 	width: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
 }
-.mdc-fotolist ul li { 
+.mdc-fotolist ul li ul li { 
 	flex: 0 0 calc(33% - 20px);
 	height: 225px;
 	margin: 10px
@@ -95,6 +95,16 @@ section#latestPhotos {
     background: no-repeat center center;
     background-size: cover;
     display: inline-block;
+    transition: all 150ms ease-in-out;
+    border: 8px solid transparent;
+    border-radius: 3px;
+    box-sizing: border-box;
+    transform: scale(1);
+}
+.mdc-fotolist ul li a:hover { 
+    border: 8px solid rgb(229, 0, 125);
+    background-position: center;
+    transform: scale(1.05);
 }
 .mdc-fotolist .mdc-fotolist-year {
 	margin: 20px 0 0 0;
@@ -106,13 +116,18 @@ li.mdc-fotolist-item {
 li.mdc-fotolist-item img {
     position: relative;
 }
-li.mdc-fotolist-item span {
+li.mdc-fotolist-item a span {
     background-color: rgba(255,255,255,.95);
     position: absolute;
     bottom: 10px;
     left: 0px;
     padding: 2px 10px;
     color: #222;
+    transition: all 150ms ease-in-out;
+}
+li.mdc-fotolist-item a:hover span {
+    background: rgba(229, 0, 125, .95);
+    color: #fff;
 }
 .section-home-infoutili .inside-article .section-title,
 .section-home-infoutili .inside-article .section-summary,
