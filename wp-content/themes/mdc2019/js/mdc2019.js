@@ -11,6 +11,14 @@ window.addEventListener("DOMContentLoaded", function() {
 		});
 	}
 
+	// let fotolistYear = document.querySelectorAll(".mdc-fotolist-title-year");
+	// Array.from(fotolistYear).forEach(function(element,index) {
+	// 	let singleFoto = element.querySelectorAll(".mdc-fotolist-item");
+	// 	if (singleFoto.length === 0) {
+	//		... 
+	// 	}
+	// });
+
 });
 
 window.addEventListener('load', function() {

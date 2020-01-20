@@ -48,18 +48,25 @@ get_header(); ?>
 						<?php 
 						$raduniufficiali = get_pages($args_raduniufficiali);
 						if (!empty($raduniufficiali)) {
+							echo '<ul class="mdc-fotolist">';
+							$i=0;
 							foreach ($raduniufficiali as $r) { 
-
-								if($r->post_content && $r->post_content == '[gallery]') {
-									//print_r($r);
-									echo '</ul><ul class="mdc-fotolist"><li class="mdc-fotolist-title-year"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3></li><ul>';
-								} else {
-									$fotolist_thumb_url = get_the_post_thumbnail_url($r->ID,'medium_large');
-									echo '<li class="mdc-fotolist-item"><a style="background-image:url('.$fotolist_thumb_url.');" href="'. get_permalink($r->ID).'"><span>'.$r->post_title.'</span></a></li>';
-								}
-
+								//var_dump($r->ID);
+								// if (has_children('albums',$r->ID)) {
+									if($r->post_content && $r->post_content == '[gallery]') {
+										
+									if($i!==0) {
+										echo '</ul></li></ul>';
+									}								
+									echo '<li class="mdc-fotolist-title-year"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3><ul class="mdc-fotolist-thumbs"><li><ul>';
+									} else {
+										$fotolist_thumb_url = get_the_post_thumbnail_url($r->ID,'medium_large');
+										echo '<li class="mdc-fotolist-item"><a style="background-image:url('.$fotolist_thumb_url.');" href="'. get_permalink($r->ID).'"><span>'.$r->post_title.'</span></a></li>';
+									}
+									$i++;
+								// }
 							 }
-							 echo '</ul>';
+							 echo '</li></ul>';
 						}
 						?>
 					</div>
@@ -74,16 +81,22 @@ get_header(); ?>
 						<?php 
 						$partecipazioni = get_pages($args_partecipazioni);
 						if (!empty($partecipazioni)) {
+							echo '<ul class="mdc-fotolist">';
+							$p=0;
 							foreach ($partecipazioni as $r) { 
+
 								if($r->post_content && $r->post_content == '[gallery]') {
-									echo '</ul><ul class="mdc-fotolist"><li class="mdc-fotolist-title"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3></li><ul>';
+									if($p!==0) {
+										echo '</ul></li></ul>';
+									}									
+									echo '<li class="mdc-fotolist-title-year"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3><ul class="mdc-fotolist-thumbs"><li><ul>';
 								} else {
 									$fotolist_thumb_url = get_the_post_thumbnail_url($r->ID,'medium_large');
 									echo '<li class="mdc-fotolist-item"><a style="background-image:url('.$fotolist_thumb_url.');" href="'. get_permalink($r->ID).'"><span>'.$r->post_title.'</span></a></li>';
 								}
-
+								$p++;
 							 }
-							 echo '</ul>';
+							 echo '</li></ul>';
 						}
 						?>
 					</div>
