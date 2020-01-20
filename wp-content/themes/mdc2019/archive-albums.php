@@ -51,7 +51,7 @@ get_header(); ?>
 							foreach ($raduniufficiali as $r) { 
 
 								if($r->post_content && $r->post_content == '[gallery]') {
-									print_r($r);
+									//print_r($r);
 									echo '</ul><ul class="mdc-fotolist"><li class="mdc-fotolist-title-year"><h3 class="mdc-fotolist-year">'.$r->post_title.'</h3></li><ul>';
 								} else {
 									$fotolist_thumb_url = get_the_post_thumbnail_url($r->ID,'medium_large');
