@@ -195,3 +195,37 @@ li.mdc-fotolist-item a:hover span {
 	}
 }
 
+
+div.wpcf7-response-output {
+    position: fixed;
+    z-index: 100;
+    width: 75vw;
+    box-sizing: border-box;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #ffffffdd;
+    box-shadow: 0 0 300px #222;
+    padding: 50px;
+    margin: 0;
+    border-radius: 0;
+    font-weight: 700;
+    text-align: center;
+}
+div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    background: #e5007d;
+    border: none;
+    max-width: 500px;
+    color:#fff;
+    border-radius: 15px;
+    padding: 50px 30px;
+    font-weight: 700;
+}
+div.wpcf7-response-output.wpcf7-validation-errors{
+    background: #f7e700;
+    border-radius: 0;
+    padding: 5px 50px;
+    width:100%;
+    top: initial;
+    bottom: 0;
+}
