@@ -183,11 +183,11 @@ li.mdc-fotolist-item a:hover span {
 		-webkit-box-orient: vertical;  
 		overflow: hidden;
 	}
-	.mdc-fotolist ul li { flex: 0 0 50%; }
+	.mdc-fotolist ul li ul li { flex: 0 0 50%; }
 }
 
 @media all and (max-width: 480px) {
-	.mdc-fotolist ul li { flex: 0 0 100%; }
+	.mdc-fotolist ul li ul li { flex: 0 0 100%; }
 	.tpl-index .post-image {
 		float: none;
     	margin: 25px auto 0 auto;
