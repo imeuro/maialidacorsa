@@ -195,7 +195,7 @@ li.mdc-fotolist-item a:hover span {
 	}
 }
 
-
+div.wpcf7-display-none { display: none; }
 div.wpcf7-response-output {
     position: fixed;
     z-index: 100;
@@ -205,7 +205,6 @@ div.wpcf7-response-output {
     left: 50%;
     transform: translate(-50%,-50%);
     background: #ffffffdd;
-    box-shadow: 0 0 300px #222;
     padding: 50px;
     margin: 0;
     border-radius: 0;
@@ -220,6 +219,7 @@ div.wpcf7-response-output.wpcf7-mail-sent-ok {
     border-radius: 15px;
     padding: 50px 30px;
     font-weight: 700;
+    box-shadow: 0 0 300px #222;
 }
 div.wpcf7-response-output.wpcf7-validation-errors{
     background: #f7e700;
