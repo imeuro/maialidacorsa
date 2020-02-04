@@ -32,8 +32,10 @@ get_header(); ?>
 					</header><!-- .section-header -->
 		
 					<div class="section-summary" itemprop="text">
-						<img width="300" height="228" src="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png" class="attachment-medium size-medium" alt="100% MINISTA - Maiali Da Corsa" loading="lazy" srcset="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png 300w, https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1.png 595w" sizes="(max-width: 300px) 100vw, 300px">
-						<p><?php echo $about->post_excerpt; ?></p>
+						<a href="<?php echo $about->guid; ?>" title="<?php echo $about->post_title; ?>">
+							<img width="300" height="228" src="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png" class="attachment-medium size-medium" alt="100% MINISTA - Maiali Da Corsa" loading="lazy" srcset="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png 300w, https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1.png 595w" sizes="(max-width: 300px) 100vw, 300px">
+							<p><?php echo $about->post_excerpt; ?></p>
+						</a>
 					</div><!-- .section-summary -->
 
 					<footer class="section-meta"></footer><!-- .section-meta -->
