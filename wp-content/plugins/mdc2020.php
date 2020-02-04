@@ -56,8 +56,6 @@ function has_children($post_type="post",$post_id) {
 }
 
 
-remove_image_size('1536x1536');
-remove_image_size('2048x2048');
 
 /////////////////////////////////////////////////////////////
 
