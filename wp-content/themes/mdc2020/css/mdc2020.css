@@ -42,7 +42,7 @@ body{
     justify-content: space-between;
     align-items: center;
 }
-.section-home-about .section-header {
+.section-home-about .section-header h2 {
     text-transform: uppercase;
     color: #e5007d;
 }
