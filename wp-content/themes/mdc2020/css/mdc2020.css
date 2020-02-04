@@ -42,6 +42,10 @@ body{
     justify-content: space-between;
     align-items: center;
 }
+.section-home-about .section-header {
+    text-transform: uppercase;
+    color: #e5007d;
+}
 .section-home-about .section-summary p {
     flex: 0 0 50%;
     align-content: space-around;
