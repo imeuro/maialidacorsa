@@ -22,6 +22,7 @@ get_header(); ?>
 
 
 			$about = get_post(4876); // chi siamo
+			setup_postdata(get_post(4876));
 			//var_dump($about);
 			?>
 			
@@ -36,7 +37,7 @@ get_header(); ?>
 						<a href="<?php echo get_permalink($about->ID); ?>" title="<?php echo $about->post_title; ?>">
 							<img width="300" height="228" src="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png" class="attachment-medium size-medium" alt="100% MINISTA - Maiali Da Corsa" loading="lazy" srcset="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png 300w, https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1.png 595w" sizes="(max-width: 300px) 100vw, 300px">
 						</a>
-						<p><?php echo get_the_excerpt($about->ID); ?></p>
+						<p><?php echo get_the_excerpt($about->ID); ?><br /><a href="<?php echo get_permalink($about->ID); ?>" title="Leggi tutto: <?php echo $about->post_title; ?>">Leggi tutto...</a></p>
 						
 					</div><!-- .section-summary -->
 
