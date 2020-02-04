@@ -180,6 +180,7 @@ li.mdc-fotolist-item a:hover span {
 	.site-branding { display: none; }
 	#cover .swiper-slide { height: 50vh; }
 
+    .section-home-about .section-summary { display: block; }
 	.item-latest-news { align-items: flex-start; }
 	.item-latest-news figure {
     	flex: 0 0 100px;
