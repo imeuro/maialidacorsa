@@ -20,8 +20,25 @@ get_header(); ?>
 			 */
 			do_action( 'generate_before_main_content' );
 
+
+			$about = get_post(4876); // chi siamo
 			?>
 			
+			<section id="about" class="section section-home section-home-about">
+				<div class="inside-article">
+		
+					<header class="section-header">
+						<h2 class="section-title" itemprop="headline"><?php echo $about->post_title; ?></h2>
+					</header><!-- .section-header -->
+		
+					<div class="section-summary" itemprop="text">
+						<img width="300" height="228" src="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png" class="attachment-medium size-medium" alt="100% MINISTA - Maiali Da Corsa" loading="lazy" srcset="https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1-300x228.png 300w, https://www.maialidacorsa.it/wp-content/uploads/2020/02/100-minista-1.png 595w" sizes="(max-width: 300px) 100vw, 300px">
+						<p><?php echo $about->post_excerpt; ?></p>
+					</div><!-- .section-summary -->
+
+					<footer class="section-meta"></footer><!-- .section-meta -->
+				</div><!-- .inside-article -->
+			</section>
 
 
 			<section id="latestNews" class="section section-home section-home-latestnews">
