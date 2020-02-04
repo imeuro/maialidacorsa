@@ -127,6 +127,8 @@ function mdc2020_CPT() {
 }
 add_action( 'init', 'mdc2020_CPT', 0 );
 
+add_post_type_support( 'page', 'excerpt' );
+
 /////////////////////////////////////////////////////////////
 
 function rename_posts() {
