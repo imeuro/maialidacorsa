@@ -96,3 +96,20 @@ require get_template_directory() . '/inc/structure/navigation.php';
 require get_template_directory() . '/inc/structure/post-meta.php';
 require get_template_directory() . '/inc/structure/sidebars.php';
 
+
+// How to Disable WordPress Automatically Generated Images – Complete Guide
+// https://perishablepress.com/disable-wordpress-generated-images/#disable-2x-medium-large
+remove_image_size('1536x1536');
+remove_image_size('2048x2048');
+function MDC2020_disable_large_imgs($sizes) {
+	
+	unset($sizes['1536x1536']); // disable 2x medium-large size
+	unset($sizes['2048x2048']); // disable 2x large size
+
+	return $sizes;
+	
+}
+add_filter('intermediate_image_sizes_advanced', 'MDC2020_disable_large_imgs');
+add_filter('big_image_size_threshold', '__return_false');
+
+
