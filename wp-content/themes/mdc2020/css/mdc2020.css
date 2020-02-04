@@ -36,6 +36,17 @@ body{
 }
 
 /* home blocks */
+.section-home-about .section-summary {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.section-home-about .section-summary p {
+    flex: 0 0 50%;
+    align-content: space-around;
+}
+
 .item-latest-news {
     display: flex;
     flex-flow: row nowrap;
