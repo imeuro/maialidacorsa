@@ -101,7 +101,6 @@ function mdc2020_CPT() {
 		'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
 		'taxonomies'            => array( 'category' ),
 		// 'taxonomies'            => array( 'category', 'post_tag' ),
-		'hierarchical'          => true,
 		'public'                => true,
 		'show_ui'               => true,
 		'show_in_menu'          => true,
@@ -114,7 +113,7 @@ function mdc2020_CPT() {
 		'has_archive'           => true,
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
-        'capability_type'       => 'page',
+        'capability_type'       => 'post',
         'rewrite'               => array(
             'slug'                  => 'albums',
             'with_front'            => true,
@@ -212,3 +211,86 @@ remove_action('wp_print_styles', 'print_emoji_styles');
 
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
+
+
+
+
+/////////////////////////////////////////////////////
+
+// PRINT ALBUMS LIST
+
+function MDCAlbums_categories_and_posts( $parent_cat ) {
+	$parent_cat = $parent_cat;
+	$parent_cat_id	= get_category_by_slug($parent_cat)->term_id;
+    $taxonomy   = 'category';
+    $post_type  = 'albums';
+
+    // Get the top categories that belong to the provided taxonomy (the ones without parent)
+	$cat_args = array(
+	    'parent'		=> $parent_cat_id, // single_level in depth
+	    // 'child_of'	=> $parent_cat_id,  // multi_level in depth
+	    'orderby'		=> 'term_id',
+	    'order'			=> 'DESC',
+    	'hide_empty'	=> true
+	); 
+    $categories = get_terms($taxonomy, $cat_args);
+
+    // echo '-------';
+    // print_r($categories);
+    // die();
+
+	// Iterate through all categories to display each individual category
+	foreach ( $categories as $category ) {
+
+	    $cat_name = $category->name;
+	    $cat_id   = $category->term_id;
+	    $cat_slug = $category->slug;
+
+	    // Display the name of each individual category with ID and Slug
+	    echo '<ul class="mdc-fotolist">';
+	    echo '<li class="mdc-fotolist-title-year"><h3 class="mdc-fotolist-year">'.$cat_name.'</h3>';
+
+	    // Get all posts that belong to this specific category
+	    $posts = new WP_Query(
+	        array(
+	            'post_type'      => $post_type,
+	            'posts_per_page' => -1, // <-- Show all posts
+	            'hide_empty'     => true,
+	            'order'          => 'DESC',
+	            'tax_query'      => array(
+	                array(
+	                    'taxonomy' => $taxonomy,
+	                    'terms'    => $cat_id,
+	                    'field'    => 'id'
+	                )
+	            )
+	        )
+	    );
+
+	    // If there are posts available within this subcategory
+	    if ( $posts->have_posts() ):
+	    ?>
+	    <ul class="mdc-fotolist-thumbs">
+	        <li>
+	        	<ul>
+	            <?php
+
+	            // As long as there are posts to show
+	            while ( $posts->have_posts() ): $posts->the_post();
+
+	            //Show the thumb of each post with the Post Title
+	            $fotolist_thumb_url = get_the_post_thumbnail_url($posts->ID,'medium_large');
+	            ?>
+				<li class="mdc-fotolist-item"><a style="background-image:url(<?php echo $fotolist_thumb_url ?>)" href="<?php echo get_permalink($posts->ID) ?>"><span><?php the_title(); ?></span></a></li>
+	            <?php
+	            endwhile;
+	            ?>
+	        	</ul>
+	        </li>
+	    </ul>
+	    <?php
+	    endif;
+	    echo '</li></ul>';
+	    wp_reset_query();
+	}
+}
