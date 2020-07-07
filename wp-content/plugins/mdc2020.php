@@ -16,8 +16,8 @@ Author URI: http://imeuro.io/
 function mdc2020_files() { 
     if (is_front_page()) {
     	// SWIPER css e js - https://swiperjs.com/get-started/
-    	wp_enqueue_style('swiper', "https://unpkg.com/swiper/css/swiper.min.css");
-		wp_enqueue_script( 'swiper', "https://unpkg.com/swiper/js/swiper.min.js", array(), '1.0.0', true );
+    	wp_enqueue_style('swiper', "https://unpkg.com/swiper/swiper-bundle.min.css");
+		wp_enqueue_script( 'swiper', "https://unpkg.com/swiper/js/swiper-bundle.min.js", array(), '1.0.0', true );
     }
     wp_enqueue_script( 'fslightbox', get_template_directory_uri() . '/js/fslightbox.js', array(), '1.0.0', true );
     wp_enqueue_style('mdc2020_main', get_template_directory_uri() . "/css/mdc2020.css");
