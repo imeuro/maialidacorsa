@@ -216,6 +216,7 @@ div.wpcf7-response-output {
     position: fixed;
     z-index: 100;
     width: 75vw;
+    max-width: 500px;
     box-sizing: border-box;
     top: 50%;
     left: 50%;
