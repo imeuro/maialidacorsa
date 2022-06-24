@@ -211,6 +211,16 @@ li.mdc-fotolist-item a:hover span {
 	}
 }
 
+form.wpcf7-form.init {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 90vw;
+}
+
+
 div.wpcf7-display-none { display: none; }
 div.wpcf7-response-output {
     position: fixed;
