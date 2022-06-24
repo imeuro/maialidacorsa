@@ -26,6 +26,7 @@ body{
     border-radius: 7px;
     background: rgba(255,255,255,.95);
 }
+#cover {overflow: hidden;}
 #cover .swiper-big-home {
     background-color: #fff;
 }
@@ -83,6 +84,7 @@ body{
 
 section#latestPhotos {
     border-radius: 7px;
+    overflow: hidden;
 }
 .mdc-fotolist, .mdc-fotolist ul {
 	list-style-type: none;
