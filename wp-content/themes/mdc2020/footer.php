@@ -61,6 +61,8 @@ do_action( 'generate_after_footer' );
 wp_footer();
 ?>
 
+
+<?php if (function_exists( 'cn_cookies_accepted' ) && cn_cookies_accepted()) : ?>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156557811-1"></script>
 <script>
@@ -73,3 +75,4 @@ wp_footer();
 
 </body>
 </html>
+<?php endif; ?>
