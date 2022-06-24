@@ -70,7 +70,7 @@ wp_footer();
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-156557811-1');
+  gtag('config', 'UA-156557811-1', { 'anonymize_ip': true });
 </script>
 
 </body>
