@@ -431,7 +431,8 @@ select {
 	border-radius: 0px;
 	padding: 10px 15px;
 	box-sizing: border-box;
-	max-width: 100%;
+	width: 80vw;
+    max-width: 640px;
 }
 
 textarea {
