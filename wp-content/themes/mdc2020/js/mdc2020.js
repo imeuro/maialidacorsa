@@ -29,6 +29,7 @@ window.addEventListener('load', function() {
 
 	if (document.querySelectorAll('.swiper-container').length !== 0) {
 		let BHArgs = {
+			slidesPerView: '1',
 			direction: 'horizontal',
 			autoplay: {
 				delay: 5000,
@@ -42,11 +43,12 @@ window.addEventListener('load', function() {
 				onlyInViewport: true,
 			},
 			preloadImages: false,
-			lazy: true
+			lazy: true,
+			pagination: false
 		};
 
 		let GHArgs = {};
-		if (sw > 640) {
+		if (window.innerWidth > 640) {
 			GHArgs = {
 				slidesPerView: '3',
 				autoHeight: true,

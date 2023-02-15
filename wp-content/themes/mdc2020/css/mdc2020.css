@@ -86,6 +86,7 @@ section#latestPhotos {
     border-radius: 7px;
     overflow: hidden;
 }
+section#latestPhotos .swiper-container { position:relative; }
 .mdc-fotolist, .mdc-fotolist ul {
 	list-style-type: none;
 	margin: 0;
