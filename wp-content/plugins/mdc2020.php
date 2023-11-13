@@ -309,7 +309,7 @@ add_filter('language_attributes', 'doctype_opengraph');
 function fb_opengraph() {
     global $post;
  
-    if(is_single()) {
+    if(is_single() || is_page()) {
         if(has_post_thumbnail($post->ID)) {
             $img_src = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'medium');
         } else {
