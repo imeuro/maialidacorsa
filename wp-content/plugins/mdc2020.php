@@ -332,6 +332,7 @@ function fb_opengraph() {
  
 <?php
     } else {
+    	echo 'mario.';
         return;
     }
 }
