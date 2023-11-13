@@ -112,4 +112,3 @@ function MDC2020_disable_large_imgs($sizes) {
 add_filter('intermediate_image_sizes_advanced', 'MDC2020_disable_large_imgs');
 add_filter('big_image_size_threshold', '__return_false');
 
-
