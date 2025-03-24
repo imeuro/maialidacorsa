@@ -2,6 +2,7 @@
 .DS_Store
 
 wp-config.php
+wp-config.*
 wp-content/advanced-cache.php
 wp-content/backup-db/
 wp-content/backups/
@@ -10,6 +11,7 @@ wp-content/cache/
 wp-content/dbs/
 wp-content/languages/
 wp-content/upgrade/
+wp-content/ewww/
 wp-content/uploads/
 wp-content/mu-plugins/
 wp-content/wp-cache-config.php
