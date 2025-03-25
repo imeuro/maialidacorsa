@@ -112,3 +112,18 @@ function MDC2020_disable_large_imgs($sizes) {
 add_filter('intermediate_image_sizes_advanced', 'MDC2020_disable_large_imgs');
 add_filter('big_image_size_threshold', '__return_false');
 
+
+
+add_action( 'wpcf7_before_send_mail', 'my_process_cf7_form_data' );
+function my_process_cf7_form_data() {
+
+    $submission = WPCF7_Submission::get_instance();
+        if ( $submission ) {
+            $posted_data = $submission->get_posted_data();    
+    }
+
+    ob_start();
+    var_dump($posted_data);
+    error_log(ob_get_clean());
+
+}
