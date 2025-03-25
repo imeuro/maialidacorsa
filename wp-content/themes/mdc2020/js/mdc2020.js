@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	//		... 
 	// 	}
 	// });
-	console.log('powered by hostinger.');
+	console.log('powered by meuro.dev.');
 });
 
 window.addEventListener('load', function() {
