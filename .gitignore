@@ -1,6 +1,8 @@
 *.log
 .DS_Store
 
+index.php
+wp-*.php
 wp-config.php
 wp-config.*
 wp-content/advanced-cache.php
@@ -20,10 +22,13 @@ wp-content/plugins/*
 !wp-content/plugins/mdc2019.php
 wp-admin/
 wp-includes/
+misc
 
 
+google*.html
 /.htaccess
 /license.txt
 /readme.html
 /sitemap.xml
 /sitemap.xml.gz
+xmlrpc.php
