@@ -88,8 +88,13 @@ if ( ! function_exists( 'generate_construct_logo' ) ) {
 		$logo_url = ( function_exists( 'the_custom_logo' ) && get_theme_mod( 'custom_logo' ) ) ? wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' ) : false;
 		$logo_url = ( $logo_url ) ? $logo_url[0] : generate_get_option( 'logo' );
 
-		$logo_url = esc_url( apply_filters( 'generate_logo', $logo_url ) );
+		//$logo_url = esc_url( apply_filters( 'generate_logo', $logo_url ) );
 		$retina_logo_url = esc_url( apply_filters( 'generate_retina_logo', generate_get_option( 'retina_logo' ) ) );
+
+		$logo_id = get_theme_mod( 'custom_logo' );
+		$logo_url = wp_get_attachment_image_src( $logo_id, 'full' );
+		$logo_width = $logo_url[1];
+		$logo_height = $logo_url[2];
 
 		// If we don't have a logo, bail.
 		if ( empty( $logo_url ) ) {
@@ -105,8 +110,10 @@ if ( ! function_exists( 'generate_construct_logo' ) ) {
 
 		$attr = apply_filters( 'generate_logo_attributes', array(
 			'class' => 'header-image',
-			'alt'	=> esc_attr( apply_filters( 'generate_logo_title', get_bloginfo( 'name', 'display' ) ) ),
-			'src'	=> $logo_url,
+			'alt'   => esc_attr( apply_filters( 'generate_logo_title', get_bloginfo( 'name', 'display' ) ) ),
+			'src'   => $logo_url[0],
+			'width' => $logo_width,
+			'height' => $logo_height,
 			'title'	=> esc_attr( apply_filters( 'generate_logo_title', get_bloginfo( 'name', 'display' ) ) ),
 		) );
 
