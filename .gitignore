@@ -19,7 +19,7 @@ wp-content/mu-plugins/
 wp-content/wp-cache-config.php
 wp-content/themes/twenty*
 wp-content/plugins/*
-!wp-content/plugins/mdc2019.php
+!wp-content/plugins/mdc2020.php
 wp-admin/
 wp-includes/
 misc
