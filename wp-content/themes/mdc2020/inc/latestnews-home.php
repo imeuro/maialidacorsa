@@ -24,25 +24,19 @@
 						?>
 						<div class="item-latest-news">
 							<figure>
-								<?php if ( has_post_thumbnail() ) : ?>
-								    <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-								        <?php if ( has_post_thumbnail() ) : ?>
-								            <?php the_post_thumbnail('thumbnail'); ?>
-								        <?php else : ?>
-								            <?php
-								            $attachments = get_children( array(
-								                'post_parent'    => get_the_ID(),
-								                'post_type'      => 'attachment',
-								                'post_mime_type' => 'image',
-								            ) );
-								            if ( $attachments ) {
-								                $attachment = array_shift( $attachments );
-								                echo wp_get_attachment_image( $attachment->ID, 'thumbnail' );
-								            }
-								            ?>
-								        <?php endif; ?>
-								    </a>
-								<?php endif; ?>
+								<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+									<?php if ( has_post_thumbnail() ) : ?>
+										<?php the_post_thumbnail('thumbnail'); ?>
+									<?php else : ?>
+										<?php
+										$attachments = get_attached_media( 'image', 7512 );
+										if ( $attachments ) {
+											$attachment = array_shift( $attachments );
+											echo wp_get_attachment_image( $attachment->ID, 'thumbnail' );
+										}
+										?>
+									<?php endif; ?>
+								</a>
 							</figure>
 							<div class="text-latest-news">
 								<h3 class="entry-title" itemprop="headline"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h3>
