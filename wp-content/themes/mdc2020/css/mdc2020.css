@@ -58,6 +58,7 @@ body{
     align-items: center;
     margin-bottom: 20px;
     border-radius: 5px;
+    word-break: break-word;
 }
 .item-latest-news figure {
     flex: 0 0 175px;
