@@ -1,5 +1,6 @@
 *.log
 .DS_Store
+.cursor.json
 
 /index.php
 /wp-*.php
