@@ -1,13 +1,13 @@
 <?php
 /**
  * @package MDC_2020
- * @version 1.0.1
+ * @version 1.0.3
  */
 /*
 Plugin Name: Maiali Da corsa 2020
 Description: This is not just a plugin, it symbolizes the hope and enthusiasm of me while doing for the 4th time the website for Maiali Da Corsa.
 Author: Mauro Fioravanzi
-Version: 1.0.1
+Version: 1.0.3
 Author URI: http://imeuro.io/
 */
 
@@ -51,13 +51,113 @@ function load_wpcf7_scripts() {
 
 
 // https://wpmayor.com/check-if-a-page-has-any-children-or-subpages/
-function has_children($post_type="post",$post_id) {
+// CORREZIONE: Parametri riorganizzati per evitare errore deprecato
+function has_children($post_id, $post_type="post") {
     $children = get_pages("child_of=$post_id,post_type=$post_type");
     if( count( $children ) != 0 ) { echo 'si'; return true; } // Has Children
     else {  echo 'no'; return false; } // No children
 }
 
+/////////////////////////////////////////////////////////////
+// ANTI-SPAM PROTECTION
 
+// Honeypot per Contact Form 7
+add_action('wpcf7_init', 'mdc2020_add_honeypot');
+function mdc2020_add_honeypot() {
+    wpcf7_add_form_tag('honeypot', 'mdc2020_honeypot_handler');
+}
+function mdc2020_honeypot_handler($tag) {
+    $tag = new WPCF7_FormTag($tag);
+    $name = $tag->name;
+    $html = '<input type="text" name="' . $name . '" style="display:none !important;" tabindex="-1" autocomplete="off" />';
+    return $html;
+}
+
+// Validazione anti-spam per Contact Form 7
+add_filter('wpcf7_validate', 'mdc2020_validate_spam', 10, 2);
+function mdc2020_validate_spam($result, $tag) {
+    $submission = WPCF7_Submission::get_instance();
+    if (!$submission) {
+        return $result;
+    }
+
+    $data = $submission->get_posted_data();
+    
+    // Controllo honeypot
+    if (!empty($data['website'])) {
+        $result->invalidate('website', 'Spam detected');
+        mdc2020_log_spam_attempt($data, 'honeypot');
+        return $result;
+    }
+
+    // Controllo rate limiting
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $rate_key = 'mdc2020_rate_limit_' . md5($ip);
+    $rate_limit = get_transient($rate_key);
+    
+    if ($rate_limit && $rate_limit > 5) {
+        $result->invalidate('your-name', 'Too many submissions. Please try again later.');
+        mdc2020_log_spam_attempt($data, 'rate_limit');
+        return $result;
+    }
+    
+    // Incrementa rate limit
+    $current_limit = $rate_limit ? $rate_limit : 0;
+    set_transient($rate_key, $current_limit + 1, 3600); // 1 ora
+
+    // Controllo contenuto sospetto
+    $suspicious_patterns = array(
+        '/\b(viagra|cialis|casino|poker|loan|debt|credit)\b/i',
+        '/\b(free.*bitcoin|get.*free.*gift)\b/i',
+        '/\b(click.*here|buy.*now|limited.*time)\b/i'
+    );
+
+    foreach ($data as $field => $value) {
+        if (is_string($value)) {
+            foreach ($suspicious_patterns as $pattern) {
+                if (preg_match($pattern, $value)) {
+                    $result->invalidate('your-name', 'Suspicious content detected');
+                    mdc2020_log_spam_attempt($data, 'suspicious_content');
+                    return $result;
+                }
+            }
+        }
+    }
+
+    return $result;
+}
+
+// Logging degli attacchi spam
+function mdc2020_log_spam_attempt($data, $type) {
+    $log_entry = array(
+        'timestamp' => current_time('mysql'),
+        'type' => $type,
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+        'data' => $data
+    );
+    
+    $log_file = WP_CONTENT_DIR . '/spam-attempts.log';
+    $log_line = json_encode($log_entry) . "\n";
+    file_put_contents($log_file, $log_line, FILE_APPEND | LOCK_EX);
+}
+
+// Aggiungi campo honeypot ai form esistenti
+add_action('wpcf7_before_send_mail', 'mdc2020_add_honeypot_field');
+function mdc2020_add_honeypot_field($cf7) {
+    $submission = WPCF7_Submission::get_instance();
+    if (!$submission) {
+        return;
+    }
+    
+    $data = $submission->get_posted_data();
+    
+    // Se il campo honeypot è compilato, blocca l'invio
+    if (!empty($data['website'])) {
+        $cf7->skip_mail = true;
+        return;
+    }
+}
 
 /////////////////////////////////////////////////////////////
 
@@ -308,34 +408,50 @@ function doctype_opengraph($output) {
 }
 add_filter('language_attributes', 'doctype_opengraph');
 
+// CORREZIONE: Funzione fb_opengraph migliorata per evitare errori array-to-string
 function fb_opengraph() {
     global $post;
 
     if(is_single() || is_page()) {
+        // Validazione del post
+        if (!$post || !is_object($post)) {
+            return;
+        }
+
+        // Gestione sicura dell'immagine
         if(has_post_thumbnail($post->ID)) {
-            $img_src = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'medium');
-            $img_src = $img_src[0]; // Estraiamo l'URL dell'immagine dall'array
+            $img_src_array = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'medium');
+            $img_src = is_array($img_src_array) && isset($img_src_array[0]) ? $img_src_array[0] : '';
         } else {
             $img_src = 'https://www.maialidacorsa.it/wp-content/uploads/2020/01/icon-mdc.png';
         }
+
+        // Gestione sicura dell'excerpt
         if($excerpt = $post->post_excerpt) {
             $excerpt = strip_tags($post->post_excerpt);
             $excerpt = str_replace("", "'", $excerpt);
         } else {
             $excerpt = get_bloginfo('description');
         }
+
+        // Ottenere titolo e permalink in modo sicuro
+        $title = get_the_title($post->ID);
+        $permalink = get_permalink($post->ID);
+        $site_name = get_bloginfo('name');
+        
+        // Validazione dei dati prima dell'output
+        if (!empty($title) && !empty($permalink)) {
         ?>
  
-    <meta property="og:title" content="<?php echo the_title(); ?>"/>
-    <meta property="og:description" content="<?php echo $excerpt; ?>"/>
+    <meta property="og:title" content="<?php echo esc_attr($title); ?>"/>
+    <meta property="og:description" content="<?php echo esc_attr($excerpt); ?>"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:url" content="<?php echo the_permalink(); ?>"/>
-    <meta property="og:site_name" content="<?php echo get_bloginfo(); ?>"/>
-    <meta property="og:image" content="<?php echo $img_src; ?>"/>
+    <meta property="og:url" content="<?php echo esc_url($permalink); ?>"/>
+    <meta property="og:site_name" content="<?php echo esc_attr($site_name); ?>"/>
+    <meta property="og:image" content="<?php echo esc_url($img_src); ?>"/>
  
 <?php
-    } else {
-        return;
+        }
     }
 }
 add_action('wp_head', 'fb_opengraph', 5);
