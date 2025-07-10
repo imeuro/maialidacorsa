@@ -159,6 +159,41 @@ function mdc2020_add_honeypot_field($cf7) {
     }
 }
 
+// Funzione per mascherare dati sensibili nei log
+function mdc2020_mask_sensitive_data($data) {
+    $sensitive_keys = [
+        'email', 'mail', 'e-mail', 'telefono', 'phone', 'cellulare', 'mobile', 'codicefiscale', 'codice_fiscale', 'cf', 'fiscalcode', 'fiscal_code'
+    ];
+    foreach ($data as $key => &$value) {
+        foreach ($sensitive_keys as $sensitive) {
+            if (stripos($key, $sensitive) !== false) {
+                $value = '[PROTETTO]';
+            }
+        }
+        if (is_array($value)) {
+            $value = mdc2020_mask_sensitive_data($value);
+        }
+    }
+    return $data;
+}
+
+// Logging personalizzato per fallimenti invio CF7
+add_action('wpcf7_mail_failed', function($contact_form) {
+    $submission = WPCF7_Submission::get_instance();
+    $posted_data = $submission ? $submission->get_posted_data() : array();
+    if (is_array($posted_data)) {
+        $posted_data = mdc2020_mask_sensitive_data($posted_data);
+    }
+    $form_id = $contact_form->id();
+    $form_title = $contact_form->title();
+    $error = isset($contact_form->prop) ? print_r($contact_form->prop('messages'), true) : 'N/A';
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'N/A';
+    $log  = "[CF7 FAIL] ".date('Y-m-d H:i:s')." | Form ID: $form_id | Titolo: $form_title | IP: $ip\n";
+    $log .= "Dati inviati: ".print_r($posted_data, true)."\n";
+    $log .= "Messaggi errore: ".$error."\n";
+    error_log($log);
+});
+
 /////////////////////////////////////////////////////////////
 
 
