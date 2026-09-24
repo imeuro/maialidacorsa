@@ -23,6 +23,9 @@ function mdc2020_files() {
     }
     wp_enqueue_script( 'fslightbox', get_template_directory_uri() . '/js/fslightbox.js', array(), '1.0.0', true );
     wp_enqueue_style('mdc2020_main', get_template_directory_uri() . "/css/mdc2020.css", array(), $version, 'all' );
+    if ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) {
+        wp_enqueue_style('mdc2020_woocommerce', get_template_directory_uri() . '/css/woocommerce.css',array( 'mdc2020_main' ), $version, 'all' );
+    }
     wp_enqueue_script( 'mdc2020_main', get_template_directory_uri() . '/js/mdc2020.js', array('fslightbox'), '1.0.0', true );
 } 
 
@@ -264,6 +267,116 @@ function mdc2020_CPT() {
 add_action( 'init', 'mdc2020_CPT', 0 );
 
 add_post_type_support( 'page', 'excerpt' );
+
+/////////////////////////////////////////////////////////////
+
+// SOCI - RUOLO E CAPABILITY
+
+function mdc2020_register_socio_role() {
+    if ( get_role( 'socio' ) ) {
+        return;
+    }
+    $customer = get_role( 'customer' );
+    $caps = $customer ? $customer->capabilities : array( 'read' => true );
+    $caps['purchase_products'] = true; // capability usata dai controlli d'acquisto WooCommerce
+    add_role( 'socio', 'Socio', $caps );
+}
+add_action( 'init', 'mdc2020_register_socio_role' );
+
+// Consente all'amministratore di testare il flusso d'acquisto
+function mdc2020_grant_admin_purchase_cap() {
+    $admin = get_role( 'administrator' );
+    if ( $admin && ! $admin->has_cap( 'purchase_products' ) ) {
+        $admin->add_cap( 'purchase_products' );
+    }
+}
+add_action( 'init', 'mdc2020_grant_admin_purchase_cap' );
+
+/////////////////////////////////////////////////////////////
+
+// SOCI - RESTRIZIONE ACQUISTO WOOCOMMERCE
+// Lo shop resta visibile a tutti, ma solo chi ha la capability
+// 'purchase_products' (ruolo Socio, o admin) può acquistare.
+// Agganciato a 'woocommerce_loaded' (non eseguito a livello di file)
+// perché mdc2020.php viene caricato prima di woocommerce.php in ordine
+// alfabetico: class_exists('WooCommerce') a livello di file sarebbe
+// sempre falso.
+
+add_action( 'woocommerce_loaded', 'mdc2020_setup_socio_purchase_restrictions' );
+function mdc2020_setup_socio_purchase_restrictions() {
+
+    function mdc2020_can_purchase() {
+        return current_user_can( 'purchase_products' );
+    }
+
+    function mdc2020_socio_cta_html() {
+        $iscrizione_url = get_permalink( 4330 ); // pagina "Iscrizione al Club"
+        if ( is_user_logged_in() ) {
+            $msg = sprintf(
+                'Il tuo account non risulta abilitato agli acquisti. <a href="%s">Scopri come diventare socio</a>.',
+                esc_url( $iscrizione_url )
+            );
+        } else {
+            $login_url = wp_login_url( get_permalink() );
+            $msg = sprintf(
+                'Per acquistare devi essere socio. <a href="%s">Accedi</a> se sei già socio, oppure <a href="%s">scopri come diventare socio</a>.',
+                esc_url( $login_url ),
+                esc_url( $iscrizione_url )
+            );
+        }
+        return '<div class="mdc-socio-cta">' . wp_kses_post( $msg ) . '</div>';
+    }
+
+    // Un prodotto non è acquistabile per chi non ha la capability
+    add_filter( 'woocommerce_is_purchasable', 'mdc2020_restrict_is_purchasable', 10, 2 );
+    function mdc2020_restrict_is_purchasable( $purchasable, $product ) {
+        if ( ! mdc2020_can_purchase() ) {
+            return false;
+        }
+        return $purchasable;
+    }
+
+    // Nell'archivio prodotti sostituisce il bottone "Aggiungi al carrello" con il CTA
+    add_filter( 'woocommerce_loop_add_to_cart_link', 'mdc2020_restrict_loop_add_to_cart', 10, 3 );
+    function mdc2020_restrict_loop_add_to_cart( $html, $product, $args ) {
+        if ( ! mdc2020_can_purchase() ) {
+            return mdc2020_socio_cta_html();
+        }
+        return $html;
+    }
+
+    // Nella scheda prodotto singola sostituisce il box d'acquisto con il CTA
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+    add_action( 'woocommerce_single_product_summary', 'mdc2020_single_add_to_cart_or_cta', 30 );
+    function mdc2020_single_add_to_cart_or_cta() {
+        if ( mdc2020_can_purchase() ) {
+            woocommerce_template_single_add_to_cart();
+        } else {
+            echo mdc2020_socio_cta_html();
+        }
+    }
+
+    // Blocca l'aggiunta al carrello anche via richieste dirette (bypass del bottone)
+    add_filter( 'woocommerce_add_to_cart_validation', 'mdc2020_restrict_add_to_cart_validation', 10, 3 );
+    function mdc2020_restrict_add_to_cart_validation( $passed, $product_id, $quantity ) {
+        if ( ! mdc2020_can_purchase() ) {
+            wc_add_notice( "Per acquistare devi essere socio. Effettua il login o scopri come associarti.", 'error' );
+            return false;
+        }
+        return $passed;
+    }
+
+    // Blocca l'accesso diretto a carrello e checkout
+    add_action( 'template_redirect', 'mdc2020_restrict_cart_checkout' );
+    function mdc2020_restrict_cart_checkout() {
+        if ( ( is_cart() || is_checkout() ) && ! mdc2020_can_purchase() ) {
+            wc_add_notice( "Per accedere al carrello e al checkout devi essere socio e aver effettuato il login.", 'error' );
+            wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
+            exit;
+        }
+    }
+
+}
 
 /////////////////////////////////////////////////////////////
 

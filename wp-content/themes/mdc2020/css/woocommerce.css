@@ -1,0 +1,228 @@
+:root {
+  --mdc-primary: #e5007d;
+  --woocommerce: var(--mdc-primary);
+  --wc-green: #7ad03a;
+  --wc-red: #a00;
+  --wc-orange: #ffba00;
+  --wc-blue: #2ea2cc;
+  --wc-primary: var(--mdc-primary);
+  --wc-primary-text: #fcfbfe;
+  --wc-secondary: #e9e6ed;
+  --wc-secondary-text: #515151;
+  --wc-highlight: #958e09;
+  --wc-highligh-text: white;
+  --wc-content-bg: #fff;
+  --wc-subtext: #767676;
+  --wc-form-border-color: rgba(32, 7, 7, 0.8);
+  --wc-form-border-radius: 4px;
+  --wc-form-border-width: 1px;
+}
+
+
+
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt {
+  background-color: var(--mdc-primary);
+  padding: 15px 20px;
+  margin: 0 20px;
+  border-radius: 4px;
+  opacity: 1;
+  transition: all 300ms ease-in-out;
+}
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit.alt:hover,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button.alt:hover,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button.alt:hover,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button.alt:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit.alt:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button.alt:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button.alt:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button.alt:hover,
+button:hover,
+html input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+a.button:hover,
+button:focus,
+html input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+a.button:focus,
+a.wp-block-button__link:not(.has-background):active,
+a.wp-block-button__link:not(.has-background):focus,
+a.wp-block-button__link:not(.has-background):hover {
+  background-color: var(--mdc-primary);
+  opacity: .7;
+  transform: scale(1.05);
+}
+.woocommerce-message { border-top-color: var(--mdc-primary);}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"],
+a.button,
+a.button:visited,
+a.wp-block-button__link:not(.has-background),
+a.wc-block-components-button,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit:hover,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button:hover,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button:hover,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce #respond input#submit:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce button.button:hover,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce input.button:hover {
+  background-color: var(--mdc-primary);
+  color: #fff;
+}
+
+
+.wp-block-woocommerce-cart.alignwide,
+.wp-block-woocommerce-checkout.alignwide.wc-block-checkout {
+  width: 100%;
+  margin: 20px 0;
+}
+
+
+/* ==========================================================================
+   Shop loop / archivio prodotti
+   ========================================================================== */
+
+.woocommerce ul.products li.product {
+  background: rgba(255, 255, 255, .95);
+  border-radius: 7px;
+  box-shadow: 0 0 15px #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: transform 200ms ease-in-out;
+}
+.woocommerce ul.products li.product:hover {
+  transform: translateY(-3px);
+}
+.woocommerce ul.products li.product a img {
+  border-radius: 5px;
+  box-shadow: none;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  color: #222;
+  font-weight: 600;
+}
+.woocommerce ul.products li.product .price {
+  color: var(--mdc-primary);
+  font-weight: 700;
+}
+.woocommerce span.onsale {
+  background-color: var(--mdc-primary);
+  color: #fff;
+}
+.woocommerce ul.products li.product .star-rating {
+  color: var(--mdc-primary);
+}
+
+
+/* ==========================================================================
+   Scheda prodotto singola
+   ========================================================================== */
+
+.woocommerce div.product .woocommerce-product-gallery img {
+  border-radius: 7px;
+}
+.woocommerce div.product .summary .price {
+  color: var(--mdc-primary);
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+  border-bottom: 2px solid var(--mdc-primary);
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+  color: var(--mdc-primary);
+}
+.woocommerce div.product .related.products ul.products li.product {
+  background: rgba(255, 255, 255, .95);
+}
+
+
+/* ==========================================================================
+   Carrello
+   ========================================================================== */
+
+.woocommerce table.shop_table {
+  border-radius: 7px;
+  overflow: hidden;
+  border-color: var(--wc-secondary);
+}
+.woocommerce table.shop_table th {
+  background: var(--wc-secondary);
+}
+.woocommerce table.cart td.actions .coupon .input-text {
+  border: var(--wc-form-border-width) solid var(--wc-form-border-color);
+  border-radius: var(--wc-form-border-radius);
+}
+.woocommerce .cart-collaterals .cart_totals .amount {
+  color: var(--mdc-primary);
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   Checkout
+   ========================================================================== */
+
+.woocommerce-checkout .form-row input.input-text,
+.woocommerce-checkout .form-row select,
+.woocommerce-checkout .form-row textarea {
+  border: var(--wc-form-border-width) solid var(--wc-form-border-color);
+  border-radius: var(--wc-form-border-radius);
+}
+.woocommerce-checkout .form-row input.input-text:focus,
+.woocommerce-checkout .form-row select:focus,
+.woocommerce-checkout .form-row textarea:focus {
+  border-color: var(--mdc-primary);
+  outline: none;
+}
+.woocommerce-checkout #order_review,
+.woocommerce-checkout-review-order-table {
+  background: rgba(255, 255, 255, .95);
+  border-radius: 7px;
+}
+.woocommerce-checkout .woocommerce-checkout-review-order-table .order-total .amount {
+  color: var(--mdc-primary);
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   Notice e CTA soci
+   ========================================================================== */
+
+.woocommerce-error,
+.woocommerce-info {
+  border-top-color: var(--mdc-primary);
+}
+.mdc-socio-cta {
+  border-top: 3px solid var(--mdc-primary);
+  background: var(--wc-secondary);
+  color: var(--wc-secondary-text);
+  padding: 1em 2em;
+  border-radius: 0 0 5px 5px;
+}
+.mdc-socio-cta a {
+  color: var(--mdc-primary);
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .woocommerce ul.products li.product {
+    margin-bottom: 15px;
+  }
+}
