@@ -62,6 +62,36 @@ a.wp-block-button__link:not(.has-background):hover {
 }
 .woocommerce-message { border-top-color: var(--mdc-primary);}
 
+/* Il bottone d'acquisto resta viola (colore di default di WooCommerce)
+   finché è "disabled" (nessuna variante scelta): quella regola di WC ha
+   una classe in più (.alt.disabled) quindi più specificità della nostra,
+   e vince anche se il nostro CSS si carica dopo. Pareggiamo la specificità
+   per riprendere il controllo del colore anche in questo stato. */
+.woocommerce a.button.alt.disabled,
+.woocommerce a.button.alt.disabled:hover,
+.woocommerce a.button.alt:disabled,
+.woocommerce a.button.alt:disabled:hover,
+.woocommerce button.button.alt.disabled,
+.woocommerce button.button.alt.disabled:hover,
+.woocommerce button.button.alt:disabled,
+.woocommerce button.button.alt:disabled:hover,
+.woocommerce input.button.alt.disabled,
+.woocommerce input.button.alt.disabled:hover,
+.woocommerce input.button.alt:disabled,
+.woocommerce input.button.alt:disabled:hover {
+  background-color: var(--mdc-primary);
+  opacity: .5;
+}
+
+/* Il selettore di variante (es. Taglia) eredita da style.css una regola
+   generale "select { width: 80vw }" pensata per altri form del sito,
+   che lo rende enorme. Lo riportiamo a una larghezza normale. */
+.woocommerce div.product form.cart .variations select {
+  width: auto;
+  min-width: 200px;
+  max-width: 100%;
+}
+
 button,
 html input[type="button"],
 input[type="reset"],
