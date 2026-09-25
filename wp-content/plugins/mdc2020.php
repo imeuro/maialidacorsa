@@ -51,7 +51,7 @@ function load_wpcf7_scripts() {
 
 
 // https://wpmayor.com/check-if-a-page-has-any-children-or-subpages/
-function has_children($post_type="post",$post_id) {
+function has_children($post_id, $post_type = "post") {
     $children = get_pages("child_of=$post_id,post_type=$post_type");
     if( count( $children ) != 0 ) { echo 'si'; return true; } // Has Children
     else {  echo 'no'; return false; } // No children
@@ -326,12 +326,12 @@ function fb_opengraph() {
         }
         ?>
  
-    <meta property="og:title" content="<?php echo the_title(); ?>"/>
+    <meta property="og:title" content="<?php echo esc_attr( get_the_title() ); ?>"/>
     <meta property="og:description" content="<?php echo $excerpt; ?>"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:url" content="<?php echo the_permalink(); ?>"/>
-    <meta property="og:site_name" content="<?php echo get_bloginfo(); ?>"/>
-    <meta property="og:image" content="<?php echo $img_src; ?>"/>
+    <meta property="og:url" content="<?php echo esc_url( get_permalink() ); ?>"/>
+    <meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo('name') ); ?>"/>
+    <meta property="og:image" content="<?php echo esc_url( $img_src ); ?>"/>
  
 <?php
     } else {
