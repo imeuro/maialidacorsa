@@ -310,7 +310,10 @@ function mdc2020_setup_socio_purchase_restrictions() {
     }
 
     function mdc2020_socio_cta_html() {
-        $iscrizione_url = get_permalink( 4330 ); // pagina "Iscrizione al Club"
+        // Cerca la pagina per slug (non per ID) così il link funziona
+        // anche su database diversi da quello in cui è stato scritto.
+        $iscrizione_page = get_page_by_path( 'iscrizione-al-club' );
+        $iscrizione_url  = $iscrizione_page ? get_permalink( $iscrizione_page ) : home_url( '/' );
         if ( is_user_logged_in() ) {
             $msg = sprintf(
                 'Il tuo account non risulta abilitato agli acquisti. <a href="%s">Scopri come diventare socio</a>.',
