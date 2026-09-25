@@ -24,7 +24,16 @@ function mdc2020_files() {
     wp_enqueue_script( 'fslightbox', get_template_directory_uri() . '/js/fslightbox.js', array(), '1.0.0', true );
     wp_enqueue_style('mdc2020_main', get_template_directory_uri() . "/css/mdc2020.css", array(), $version, 'all' );
     if ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) {
-        wp_enqueue_style('mdc2020_woocommerce', get_template_directory_uri() . '/css/woocommerce.css',array( 'mdc2020_main' ), $version, 'all' );
+        $wc_css_deps = array( 'mdc2020_main' );
+        // Se presenti (es. pagina "coming soon" di WooCommerce), le mette come
+        // dipendenza così il nostro CSS viene sempre stampato per ultimo e vince
+        // sui colori di default di WooCommerce a parità di specificità.
+        foreach ( array( 'wc-blocks-style-css', 'wc-blocks-style-coming-soon-css' ) as $wc_handle ) {
+            if ( wp_style_is( $wc_handle, 'registered' ) ) {
+                $wc_css_deps[] = $wc_handle;
+            }
+        }
+        wp_enqueue_style('mdc2020_woocommerce', get_template_directory_uri() . '/css/woocommerce.css', $wc_css_deps, $version, 'all' );
     }
     wp_enqueue_script( 'mdc2020_main', get_template_directory_uri() . '/js/mdc2020.js', array('fslightbox'), '1.0.0', true );
 } 
