@@ -392,6 +392,42 @@ function mdc2020_setup_socio_purchase_restrictions() {
 
 /////////////////////////////////////////////////////////////
 
+// NASCONDE SKU E CATEGORIA DALLA SCHEDA PRODOTTO
+// Non usiamo gli SKU e non vogliamo mostrare la categoria (di default
+// "Uncategorized") ai clienti. Rimuoviamo l'hook che stampa entrambi
+// invece di sovrascrivere il template single-product/meta.php.
+
+add_action( 'woocommerce_loaded', 'mdc2020_hide_product_meta' );
+function mdc2020_hide_product_meta() {
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+}
+
+/////////////////////////////////////////////////////////////
+
+// BREADCRUMB PRODOTTO: "Shop" al posto della categoria
+// Non usiamo le categorie prodotto (tutto finisce in "Uncategorized"),
+// quindi al loro posto mostriamo sempre la voce "Shop" verso lo shop.
+
+add_filter( 'woocommerce_get_breadcrumb', 'mdc2020_product_breadcrumb_shop' );
+function mdc2020_product_breadcrumb_shop( $crumbs ) {
+    if ( ! is_product() || count( $crumbs ) < 2 ) {
+        return $crumbs;
+    }
+    $shop_page_id = wc_get_page_id( 'shop' );
+    if ( ! $shop_page_id || $shop_page_id < 0 ) {
+        return $crumbs;
+    }
+    $home  = reset( $crumbs );
+    $title = end( $crumbs );
+    return array(
+        $home,
+        array( get_the_title( $shop_page_id ), get_permalink( $shop_page_id ) ),
+        $title,
+    );
+}
+
+/////////////////////////////////////////////////////////////
+
 function rename_posts() {
     global $menu;
      
