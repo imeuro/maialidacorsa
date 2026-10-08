@@ -36,16 +36,39 @@ add_action('wp_print_styles', 'mdc2020_files');
 // remove default:
 add_filter( 'wpcf7_load_js', '__return_false' );
 add_filter( 'wpcf7_load_css', '__return_false' );
-// load only in selected pages:
+// Vero se il contenuto della pagina corrente contiene un form CF7
+// (shortcode o blocco Gutenberg): niente ID cablati, funziona su ogni database.
+function mdc2020_page_has_cf7() {
+    if ( ! is_singular() ) {
+        return false;
+    }
+    $post = get_queried_object();
+    if ( ! $post instanceof WP_Post ) {
+        return false;
+    }
+    return has_shortcode( $post->post_content, 'contact-form-7' )
+        || has_block( 'contact-form-7/contact-form-selector', $post );
+}
+// load only in pages with a form:
 add_action('wp_enqueue_scripts', 'load_wpcf7_scripts');
 function load_wpcf7_scripts() {
-    if ( is_page(array(4326,4330)) ) {
+    if ( mdc2020_page_has_cf7() ) {
         if ( function_exists( 'wpcf7_enqueue_scripts' ) ) {
             wpcf7_enqueue_scripts();
-        } 
+        }
         if ( function_exists( 'wpcf7_enqueue_styles' ) ) {
             wpcf7_enqueue_styles();
         }
+    }
+}
+// reCAPTCHA v3 di CF7 viene accodato ovunque (wp_enqueue_scripts, priorità 20)
+// e mostra il badge "protected by reCAPTCHA" su ogni pagina: lo togliamo
+// dove non c'è un form.
+add_action('wp_enqueue_scripts', 'mdc2020_dequeue_recaptcha', 21);
+function mdc2020_dequeue_recaptcha() {
+    if ( ! mdc2020_page_has_cf7() ) {
+        wp_dequeue_script( 'wpcf7-recaptcha' );
+        wp_dequeue_script( 'google-recaptcha' );
     }
 }
 
