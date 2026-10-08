@@ -33,3 +33,7 @@ misc
 /sitemap.xml
 /sitemap.xml.gz
 /xmlrpc.php
+
+# dump database
+tools/*.sql
+*.sql.gz
